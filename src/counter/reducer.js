@@ -1,7 +1,7 @@
 import { changeStep, decrement, increment, reset } from "./actions";
 
 const initialState = {
-  counter: 1,
+  counter: 0,
   step: 1,
 };
 
