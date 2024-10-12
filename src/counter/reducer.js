@@ -7,6 +7,7 @@ const initialState = {
 
 export const counterReducer = (state = initialState, action) => {
   switch (action.type) {
+    //type - те що треба зробити, payload - з чим треба зробити
     case increment.type:
       return {
         ...state,
