@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
+import { selectCounter, selectStep } from "../../counter/selectors";
 
 const Counter = () => {
-  // state.counter це «counter:» зі store.js
-  const counter = useSelector((state) => state.counter.counter);
-  const step = useSelector((state) => state.counter.step);
+  const counter = useSelector(selectCounter);
+  const step = useSelector(selectStep);
 
   const handlePlusClick = () => {};
   const handleMinusClick = () => {};
