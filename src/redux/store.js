@@ -1,10 +1,43 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { counterReducer } from "./counterSlice";
+import { tasksReducer } from "./taskSlice";
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import { searchFilterReducer } from "./searchSlice";
 
-const store = configureStore({
+const persistConfig = {
+  key: "root",
+  version: 1,
+  storage,
+  blacklist: ["searchStr"],
+};
+const persistConfigCounter = {
+  key: "counterPersistor",
+  version: 1,
+  storage,
+};
+
+export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    counter: persistReducer(persistConfigCounter, counterReducer),
+    tasks: persistReducer(persistConfig, tasksReducer),
+    searchFilter: searchFilterReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
 
-export default store;
+export let persistor = persistStore(store);
